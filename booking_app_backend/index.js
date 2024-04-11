@@ -1,11 +1,16 @@
 // index.js
 const express = require('express');
+const quocAnApiRoutes = require('./quoc_an_api');
 const fs = require('fs');
 const path = require('path');
 const sql = require('mssql');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.use('/api', quocAnApiRoutes);
 
 // Configuration for your SQL Server connection
 const config = {

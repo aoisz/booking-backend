@@ -69,11 +69,39 @@ app.put('/api/update_record/:id', async (req, res) => {
   }
 });
 
+// PUT request example using query parameter
+app.put('/api/update_record', async (req, res) => {
+  try {
+    const { ID } = req.query; // Assuming ID is passed as a query parameter like /api/update_record?ID=value
+    const { data } = req.body; // Assuming data is sent in the request body
+    const query = `UPDATE Test_Table SET column1 = '${data.value1}', column2 = '${data.value2}', column3 = '${data.value3}' WHERE id = ${ID}`; // Adjust this query based on your table structure
+    await executeQuery(query);
+    res.json({ message: 'Record updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 // DELETE request example
 app.delete('/api/delete_record/:id', async (req, res) => {
   try {
     const { id } = req.params; // Assuming the ID is passed as a URL parameter
     const query = `DELETE FROM Test_Table WHERE id = ${id}`; // Adjust this query based on your table structure
+    await executeQuery(query);
+    res.json({ message: 'Record deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// DELETE request example using query parameter
+app.delete('/api/delete_record', async (req, res) => {
+  try {
+    const { ID } = req.query; // Assuming ID is passed as a query parameter like /api/delete_record?ID=value
+    const query = `DELETE FROM Test_Table WHERE id = ${ID}`; // Adjust this query based on your table structure
     await executeQuery(query);
     res.json({ message: 'Record deleted successfully' });
   } catch (err) {

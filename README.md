@@ -39,3 +39,14 @@ Try this:
 1. Delete node_modules
 2. run: npm i
 3. run: npm start
+
+</br>
+
+**IV - You start code this project?**
+</br>
+Follow this steps:
+1. Create your branch if it isn't exist
+2. Code your things
+3. Commit your code at your branch
+4. You want update to main branch? -> Pull request on website or desktop
+5. You forgot something before coding? -> Fetch orgin at main branch -> Merge main to your branch

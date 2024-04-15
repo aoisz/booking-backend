@@ -9,7 +9,7 @@ Nguyễn Quốc An | 3120410020
 Lưu Trường An | 3120410018
 
 Open Visual Studio Code From
-
+```
 booking_app_backend
 ├── controllers
 ├── data
@@ -20,3 +20,4 @@ booking_app_backend
 ├── index
 ├── package.json
 └── package-lock.json
+```

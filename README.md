@@ -34,9 +34,7 @@ Open new terminal, run: npm start
 </br>
 
 **III - Have error?**
-
 </br>
-
 Try this:
 1. Delete node_modules
 2. run: npm i

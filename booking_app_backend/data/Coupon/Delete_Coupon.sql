@@ -1,0 +1,1 @@
+delete [Coupon] where [ID] = @CouponID

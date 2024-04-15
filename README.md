@@ -7,3 +7,16 @@ Họ và tên | Mã số sinh viên
 --- | ---
 Nguyễn Quốc An | 3120410020
 Lưu Trường An | 3120410018
+
+Open Visual Studio Code From
+
+booking_app_backend
++-- controllers
++-- data
++-- node_modules
++-- routes
++-- .env
++-- config
++-- index
++-- package.json
++-- package-lock.json

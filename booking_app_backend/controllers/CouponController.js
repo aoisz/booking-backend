@@ -8,7 +8,7 @@ const getCouponList = async (req, res, next) => {
     const coupon_rs = await CouponData.getCouponList();
 
     //
-    console.log("GET - http://localhost:" + config.port+"/api/coupon")
+    console.log("GET - " + config.url + "/api/coupon")
     res.send(coupon_rs);
   } catch (error) {
     res.status(400).send(error.message)
@@ -22,7 +22,7 @@ const getCouponById = async (req, res, next) => {
     const coupon_rs = await CouponData.getCouponById(coupon_id);
     
     //
-    console.log("GET - http://localhost:" + config.port + "/api/coupon?id=" + coupon_id)
+    console.log("GET - " + config.url + "/api/coupon?id=" + coupon_id)
     res.send(coupon_rs);
   } catch (error) {
     res.status(400).send(error.message)
@@ -35,7 +35,7 @@ const addCoupon = async (req, res, next) => {
     const coupon_rs = await CouponData.createCoupon(data)
     
     //
-    console.log("POST - http://localhost:" + config.port + "/api/coupon")
+    console.log("POST - " + config.url + "/api/coupon")
     res.send(coupon_rs);
   } catch (error) {
     res.status(400).send(error.message)
@@ -49,7 +49,7 @@ const updateCoupon = async (req, res, next) => {
     const coupon_rs = await CouponData.updateCoupon(coupon_id, data)
     
     //
-    console.log("PUT - http://localhost:" + config.port + "/api/coupon?id=" + coupon_id)
+    console.log("PUT - " + config.url + "/api/coupon?id=" + coupon_id)
     res.send(coupon_rs);
   } catch (error) {
     res.status(400).send(error.message)
@@ -62,7 +62,7 @@ const deleteCoupon = async (req, res, next) => {
     const coupon_rs = await CouponData.deleteCoupon(coupon_id)
     
     //
-    console.log("DELETE - http://localhost:" + config.port + "/api/coupon?id=" + coupon_id)
+    console.log("DELETE - " + config.url + "/api/coupon?id=" + coupon_id)
     res.send(coupon_rs);
   } catch (error) {
     res.status(400).send(error.message)

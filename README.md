@@ -1,5 +1,5 @@
-<p>Đồ án môn mobile nâng cao</p> </br>
-<p>Chủ đề: app booking hotel - Backend</p> </br>
+<p>Đồ án môn mobile nâng cao</p>
+<p>Chủ đề: app booking hotel - Backend</p>
 
 Họ và tên | Mã số sinh viên
 --- | ---

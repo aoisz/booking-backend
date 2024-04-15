@@ -4,6 +4,7 @@
 <p>Chủ đề: app booking hotel - Backend</p>
 <p>Công nghệ: express nodejs</p>
 <p>Database: SQL Server</p>
+<p>Thành viên:</p>
 
 Họ và tên | Mã số sinh viên
 --- | ---

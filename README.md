@@ -40,3 +40,4 @@ Open new terminal, run: npm start
 Try this:
 1. Delete node_modules
 2. run: npm i
+3. run: npm start

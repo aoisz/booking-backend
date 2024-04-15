@@ -48,5 +48,5 @@ Follow this steps:
 1. Create your branch if it isn't exist
 2. Code your things
 3. Commit your code at your branch
-4. You want update to main branch? -> Pull request on website or desktop
+4. You want update to main branch? -> Pull request to main -> Ask someone check and confirm request
 5. You forgot something before coding? -> Fetch orgin at main branch -> Merge main to your branch

@@ -12,6 +12,8 @@ Nguyễn Quốc An | 3120410020
 Lưu Trường An | 3120410018
 Mai Thanh An | 3120410019
 Phạm Lê Huyền Trang | 3120410012
+Vi Đào Tiến Đạt | 3120410125
+Nguyễn Anh Tuấn | 3120410587
 </br>
 
 **II - How to use?**

@@ -10,7 +10,8 @@ Họ và tên | Mã số sinh viên
 --- | ---
 Nguyễn Quốc An | 3120410020
 Lưu Trường An | 3120410018
-
+Mai Thanh An | 3120410019
+Phạm Lê Huyền Trang | 3120410012
 </br>
 
 **II - How to use?**

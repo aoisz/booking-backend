@@ -1,0 +1,1 @@
+select * from RoomType where ID = @RoomTypeID

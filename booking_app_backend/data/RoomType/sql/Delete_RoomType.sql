@@ -1,0 +1,1 @@
+delete [RoomType] where [ID] = @RoomTypeID

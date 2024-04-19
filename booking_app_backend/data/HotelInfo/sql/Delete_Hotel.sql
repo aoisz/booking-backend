@@ -1,0 +1,1 @@
+delete [HotelInfo] where [ID] = @HotelID

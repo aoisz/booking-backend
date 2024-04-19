@@ -38,11 +38,12 @@ Open new terminal, run: npm start
 
 **III - Have error?**
 </br>
-Try this:
+(👉ﾟヮﾟ)👉 Try this:
 1. Delete node_modules
 2. run: npm i
 3. run: npm start
 
+Or, try install each library
 </br>
 
 **IV - You start code this project?**
@@ -52,4 +53,4 @@ Follow this steps:
 2. Code your things
 3. Commit your code at your branch
 4. You want update to main branch? -> Pull request to main -> Ask someone check and confirm request
-5. You forget something before writing code? -> Fetch orgin at main branch -> Merge main to your branch -> Your code now is newest
+5. You forget something before writing code? -> Fetch orgin at main branch -> Merge main to your branch -> Your code now is newest ♪(^∇^*)

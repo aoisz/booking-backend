@@ -4,11 +4,11 @@ const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
 
-const getEvents = async () => {
+const getAllUser = async () => {
   try {
     let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('events'); // Folder Name here
-    const list = await pool.request().query(sqlQueries.eventslist);
+    const sqlQueries = await utils.loadSqlQueries('User'); // Folder Name here
+    const list = await pool.request().query(sqlQueries.GetAllUser);
     return list.recordset;
   } catch (error) {
     return error.message;
@@ -16,5 +16,5 @@ const getEvents = async () => {
 }
 
 module.exports = {
-  getEvents
+  getAllUser
 }

@@ -25,18 +25,19 @@ const getRoomList = async () => {
           Status: row.Status,
           Availability: row.Availability,
           Rating: row.Rating,
-          Desciption: row.Desciption,
+          Description: row.Description.trim(),
           RoomTypes: {},
           Images: [...images.map(item => item.trim())],
-          Services: [],
-          Surcharge: surcharge
+          Services: []
         };
       }
 
-      let roomType = room.RoomTypes[row.RoomTypeID];
+      let roomType = room.RoomTypes[row.RoomType_Type.trim()];
       if (!roomType) {
-        roomType = room.RoomTypes[row.RoomTypeID] = {
-          type: row.RoomTypeName,
+        roomType = room.RoomTypes[row.RoomType_Type.trim()] = {
+          type: row.RoomType_Type.trim(),
+          name: row.RoomTypeName.trim(),
+          prices: row.RoomTypePrices,
           BedTypes: {}
         };
       }
@@ -46,13 +47,17 @@ const getRoomList = async () => {
         surcharge = surcharge + row.Surcharge
       }
       room.Services = [...services];
-      room.Surcharge = surcharge
-      roomType.BedTypes[row.BedTypeID] = {
-        type: row.BedTypeName,
-        prices: row.RoomRate + surcharge,
+      roomType.BedTypes[row.BedType_Type.trim()] = {
+        type: row.BedType_Type.trim(),
+        name: "Giường " + row.BedTypeName.trim(),
+        prices: row.BedTypePrices,
+        surcharge: surcharge,
+        total: row.BedTypePrices + surcharge + row.RoomTypePrices
       };
     });
-    return rooms
+    const array = Object.values(rooms);
+
+    return array
   } catch (error) {
     return error.message;
   }
@@ -80,19 +85,19 @@ const getRoomById = async (id) => {
           Status: row.Status,
           Availability: row.Availability,
           Rating: row.Rating,
-          Desciption: row.Desciption,
+          Description: row.Description.trim(),
           RoomTypes: {},
-          Surcharge: surcharge,
           Images: [...images.map(item => item.trim())],
-          Services: [],
-          Surcharge: surcharge
+          Services: []
         };
       }
 
-      let roomType = room.RoomTypes[row.RoomTypeID];
+      let roomType = room.RoomTypes[row.RoomType_Type.trim()];
       if (!roomType) {
-        roomType = room.RoomTypes[row.RoomTypeID] = {
-          type: row.RoomTypeName,
+        roomType = room.RoomTypes[row.RoomType_Type.trim()] = {
+          type: row.RoomType_Type.trim(),
+          name: row.RoomTypeName.trim(),
+          prices: row.RoomTypePrices,
           BedTypes: {}
         };
       }
@@ -102,13 +107,18 @@ const getRoomById = async (id) => {
         surcharge = surcharge + row.Surcharge
       }
       room.Services = [...services];
-      room.Surcharge = surcharge
-      roomType.BedTypes[row.BedTypeID] = {
-        type: row.BedTypeName,
-        prices: row.RoomRate + surcharge,
+      roomType.BedTypes[row.BedType_Type.trim()] = {
+        type: row.BedType_Type.trim(),
+        name: "Giường " + row.BedTypeName.trim(),
+        prices: row.BedTypePrices,
+        surcharge: surcharge,
+        total: row.BedTypePrices + surcharge + row.RoomTypePrices
       };
     });
-    return rooms
+
+    const array = Object.values(rooms);
+
+    return array
   } catch (error) {
     return error.message;
   }

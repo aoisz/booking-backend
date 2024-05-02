@@ -15,7 +15,6 @@ const getRoomList = async () => {
 
     list.recordset.forEach(row => {
       let room = rooms[row.ID];
-      // Nếu room này chưa được khởi tạo trong rooms, thì khởi tạo
       if (!room) {
         let images = row.Images.split(",")
         services = []
@@ -35,7 +34,6 @@ const getRoomList = async () => {
       }
 
       let roomType = room.RoomTypes[row.RoomTypeID];
-      // Nếu loại phòng này chưa được khởi tạo, thì khởi tạo
       if (!roomType) {
         roomType = room.RoomTypes[row.RoomTypeID] = {
           type: row.RoomTypeName,
@@ -72,9 +70,10 @@ const getRoomById = async (id) => {
 
     room.recordset.forEach(row => {
       let room = rooms[row.ID];
-      // Nếu room này chưa được khởi tạo trong rooms, thì khởi tạo
       if (!room) {
         let images = row.Images.split(",")
+        services = []
+        surcharge = 0
         room = rooms[row.ID] = {
           ID: row.ID,
           Name: row.Name,
@@ -91,7 +90,6 @@ const getRoomById = async (id) => {
       }
 
       let roomType = room.RoomTypes[row.RoomTypeID];
-      // Nếu loại phòng này chưa được khởi tạo, thì khởi tạo
       if (!roomType) {
         roomType = room.RoomTypes[row.RoomTypeID] = {
           type: row.RoomTypeName,
@@ -103,10 +101,8 @@ const getRoomById = async (id) => {
         services.push(row.RoomServiceName.trim())
         surcharge = surcharge + row.Surcharge
       }
-      // Thêm dịch vụ vào Set services
       room.Services = [...services];
       room.Surcharge = surcharge
-      // Thêm thông tin giá và loại giường vào roomType
       roomType.BedTypes[row.BedTypeID] = {
         type: row.BedTypeName,
         prices: row.RoomRate + surcharge,

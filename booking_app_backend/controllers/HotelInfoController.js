@@ -15,32 +15,6 @@ const getHotelList = async (req, res, next) => {
     }
 }
 
-const getHotelById = async (req, res, next) => {
-    try {
-        // host/api/hotel?id=hotel_id
-        const hotel_id = req.query.id;
-        const hotel_rs = await HotelData.getHotelById(hotel_id);
-
-        //
-        console.log("GET - " + config.url + "/api/hotel?id=" + hotel_id)
-        res.send(hotel_rs);
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-}
-
-const addHotel = async (req, res, next) => {
-    try {
-        const data = req.body;
-        const hotel_rs = await HotelData.createHotel(data)
-
-        //
-        console.log("POST - " + config.url + "/api/hotel")
-        res.send(hotel_rs);
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-}
 
 const updateHotel = async (req, res, next) => {
     try {
@@ -71,8 +45,6 @@ const deleteHotel = async (req, res, next) => {
 
 module.exports = {
     getHotelList,
-    getHotelById,
-    addHotel,
     updateHotel,
     deleteHotel
 }

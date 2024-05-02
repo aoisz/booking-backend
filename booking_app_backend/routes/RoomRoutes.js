@@ -12,7 +12,7 @@ const {
     deleteRoom
 } = controller
 
-router.get('/room', getRoomList)
+router.get('/rooms', getRoomList)
 router.get('/room', getRoomById)
 router.post('/room', addRoom)
 router.put('/room', updateRoom)

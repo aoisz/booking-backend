@@ -12,7 +12,7 @@ const {
   deleteCoupon
 } = controller
 
-router.get('/coupon', getCouponList)
+router.get('/coupons', getCouponList)
 router.get('/coupon', getCouponById)
 router.post('/coupon', addCoupon)
 router.put('/coupon', updateCoupon)

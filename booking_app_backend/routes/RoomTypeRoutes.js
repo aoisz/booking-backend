@@ -8,14 +8,24 @@ const {
   getByPriceRange, 
   getByCapacity,
   getByService,
-  getByCapacityAndPriceRange
+  getByCapacityAndPriceRange,
+  getRoomTypeList,
+  getRoomTypeById,
+  addRoomType,
+  updateRoomType,
+  deleteRoomType
 } = controller;
 
 router.post('/roomtype/getByPriceRange', getByPriceRange);
 router.post('/roomtype/getByCapcity', getByCapacity);
 router.post('/roomtype/getByService', getByService);
 router.post('/roomtype/capacity&pricerange', getByCapacityAndPriceRange)
+router.get('/roomType', getRoomTypeList)
+router.get('/roomType', getRoomTypeById)
+router.post('/roomType', addRoomType)
+router.put('/roomType', updateRoomType)
+router.delete('/roomType', deleteRoomType)
 
 module.exports = {
-  routes: router
+    routes: router
 }

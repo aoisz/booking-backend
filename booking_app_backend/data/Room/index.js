@@ -56,7 +56,10 @@ const getRoomList = async () => {
       };
     });
     const array = Object.values(rooms);
-
+    array.forEach(item => {
+      item.RoomTypes = Object.values(item.RoomTypes)[0]
+      item.RoomTypes.BedTypes = Object.values(item.RoomTypes.BedTypes)
+    })
     return array
   } catch (error) {
     return error.message;
@@ -117,7 +120,10 @@ const getRoomById = async (id) => {
     });
 
     const array = Object.values(rooms);
-
+    array.forEach(item => {
+      item.RoomTypes = Object.values(item.RoomTypes)[0]
+      item.RoomTypes.BedTypes = Object.values(item.RoomTypes.BedTypes)
+    })
     return array
   } catch (error) {
     return error.message;

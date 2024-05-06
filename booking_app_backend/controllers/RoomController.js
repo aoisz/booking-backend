@@ -29,6 +29,22 @@ const getRoomById = async (req, res, next) => {
     }
 }
 
+
+const getRoomByRoomType = async (req, res, next) => {
+    try {
+        const room_type = req.query.roomtype;
+        const room_rs = await RoomData.getRoomByRoomType(room_type);
+
+        //
+        console.log("GET - " + config.url + "/api/room?roomtype=" + room_type)
+        res.send(room_rs);
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
+
+
 const addRoom = async (req, res, next) => {
     try {
         const data = req.body;
@@ -72,6 +88,7 @@ const deleteRoom = async (req, res, next) => {
 module.exports = {
     getRoomList,
     getRoomById,
+    getRoomByRoomType,
     addRoom,
     updateRoom,
     deleteRoom

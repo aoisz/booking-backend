@@ -4,6 +4,34 @@ const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
 
+const getAllRoom = async () => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('Room/sql');
+    const serviceQueries = await utils.loadSqlQueries('RoomService/sql');
+    const bedTypeQueries = await utils.loadSqlQueries('BedType/sql');
+    const roomTypeQueries = await utils.loadSqlQueries('RoomType/sql');
+    const list = await pool.request().query(sqlQueries.GetAllRoom);
+    var rooms = [];
+    for(let i = 0; i < list.recordset.length; i++) {
+      let surcharge = await pool.request().input("roomId", list.recordset[i]["ID"]).query(serviceQueries.GetTotalSurchargeByRoomId);
+      surcharge = surcharge.recordset[0]['price'];
+      let servicePrice = await pool.request().input("roomId", list.recordset[i]["ID"]).query(bedTypeQueries.GetTotalPriceByRoomId);
+      servicePrice = servicePrice.recordset[0]['price'];
+      let roomTypePrice = await pool.request().input("roomTypeId", list.recordset[i]["RoomType_ID"]).query(roomTypeQueries.GetPriceById);
+      roomTypePrice = roomTypePrice.recordset[0]['price'];
+
+      list.recordset[i]["Prices"] = surcharge + servicePrice + roomTypePrice;
+      rooms.push(list.recordset[i]);
+    }
+    // const array = Object.values(rooms);
+    return list.recordset;
+  }
+  catch (error) {
+    return error.message;
+  }
+}
+
 const getRoomList = async () => {
   try {
     let pool = await sql.connect(config.sql);
@@ -171,6 +199,7 @@ const deleteRoom = async (RoomID) => {
 }
 
 module.exports = {
+  getAllRoom,
   getRoomList,
   getRoomById,
   createRoom,

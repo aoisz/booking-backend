@@ -42,7 +42,8 @@ const getByCapacityAndPriceRange = async (req, res, next) => {
     }
     catch (error) {
         res.status(400).send(error.message);
-const config = require('../config');
+    }
+}
 
 const getRoomTypeList = async (req, res, next) => {
     try {

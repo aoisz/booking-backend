@@ -3,12 +3,22 @@
 const RoomData = require('../data/Room');
 const config = require('../config');
 
+const getAllRoom = async(req, res, next) => {
+    try {
+        const rooms = await RoomData.getAllRoom();
+        res.send(rooms);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 const getRoomList = async (req, res, next) => {
     try {
         const room_rs = await RoomData.getRoomList();
 
         //
-        console.log("GET - " + config.url + "/api/room")
+        console.log("GET - " + config.url + "/api/rooms")
         res.send(room_rs);
     } catch (error) {
         res.status(400).send(error.message)
@@ -70,6 +80,7 @@ const deleteRoom = async (req, res, next) => {
 }
 
 module.exports = {
+    getAllRoom,
     getRoomList,
     getRoomById,
     addRoom,

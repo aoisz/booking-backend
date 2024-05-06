@@ -7,18 +7,10 @@ const bodyParser = require('body-parser');
 const eventRoutes = require('./routes/eventRoutes')
 const billRoutes = require('./routes/BillRoutes')
 const couponRoutes = require('./routes/CouponRoutes')
-<<<<<<< HEAD
 const userRoutes = require('./routes/UserRoutes');
 const roomTypeRoutes = require('./routes/RoomTypeRoutes');
-=======
 const roomRoutes = require('./routes/RoomRoutes')
-const roomTypeRoutes = require('./routes/RoomTypeRoutes')
 const hotelRoutes = require('./routes/HotelInfoRoutes')
-const userRoutes = require('./routes/UserRoutes')
-
-
-
->>>>>>> origin
 
 const app = express();
 
@@ -27,17 +19,14 @@ app.use(bodyParser.json());
 
 app.use('/api', billRoutes.routes)
 app.use('/api', couponRoutes.routes)
-<<<<<<< HEAD
 app.use('/api', userRoutes.routes)
 app.use('/api', roomTypeRoutes.routes)
-=======
 app.use('/api', roomRoutes.routes)
 app.use('/api', roomTypeRoutes.routes)
 app.use('/api', hotelRoutes.routes)
 app.use('/api', userRoutes.routes)
 
 
->>>>>>> origin
 
 app.listen(config.port, () => {
   console.log('Server is listening on http://localhost:' + config.port)

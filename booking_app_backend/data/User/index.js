@@ -4,14 +4,6 @@ const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
 
-<<<<<<< HEAD
-const getAllUser = async () => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('User'); // Folder Name here
-    const list = await pool.request().query(sqlQueries.GetAllUser);
-    return list.recordset;
-=======
 const createUser = async (user) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -25,16 +17,11 @@ const createUser = async (user) => {
       .input('Birthday', sql.Date, user.Birthday)
       .query(sqlQueries.Create_User);
     return execQuery.recordset;
->>>>>>> origin
   } catch (error) {
     return error.message;
   }
 }
 
 module.exports = {
-<<<<<<< HEAD
-  getAllUser
-=======
   createUser
->>>>>>> origin
 }

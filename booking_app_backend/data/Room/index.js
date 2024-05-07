@@ -49,7 +49,7 @@ const getRoomList = async () => {
         surcharge = 0
         room = rooms[row.ID] = {
           ID: row.ID,
-          Name: row.Name,
+          Name: row.Name.trim(),
           Status: row.Status,
           Availability: row.Availability,
           Rating: row.Rating,
@@ -84,7 +84,10 @@ const getRoomList = async () => {
       };
     });
     const array = Object.values(rooms);
-
+    array.forEach(item => {
+      item.RoomTypes = Object.values(item.RoomTypes)[0]
+      item.RoomTypes.BedTypes = Object.values(item.RoomTypes.BedTypes)
+    })
     return array
   } catch (error) {
     return error.message;
@@ -109,7 +112,7 @@ const getRoomById = async (id) => {
         surcharge = 0
         room = rooms[row.ID] = {
           ID: row.ID,
-          Name: row.Name,
+          Name: row.Name.trim(),
           Status: row.Status,
           Availability: row.Availability,
           Rating: row.Rating,
@@ -145,12 +148,87 @@ const getRoomById = async (id) => {
     });
 
     const array = Object.values(rooms);
-
+    array.forEach(item => {
+      item.RoomTypes = Object.values(item.RoomTypes)[0]
+      item.RoomTypes.BedTypes = Object.values(item.RoomTypes.BedTypes)
+    })
     return array
   } catch (error) {
     return error.message;
   }
 }
+
+
+const getRoomByRoomType = async (roomType) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('Room/sql'); // Folder Name here
+    const room = await pool.request().input('RoomType', sql.NVarChar(10), roomType).query(sqlQueries.Select_RoomByRoomType);
+
+    let rooms = {};
+    let services = []
+    let surcharge = 0
+
+    room.recordset.forEach(row => {
+      let room = rooms[row.ID];
+      if (!room) {
+        let images = row.Images.split(",")
+        services = []
+        surcharge = 0
+        room = rooms[row.ID] = {
+          ID: row.ID,
+          Name: row.Name.trim(),
+          Status: row.Status,
+          Availability: row.Availability,
+          Rating: row.Rating,
+          Description: row.Description.trim(),
+          RoomTypes: {},
+          Images: [...images.map(item => item.trim())],
+          Services: []
+        };
+      }
+
+      let roomType = room.RoomTypes[row.RoomType_Type.trim()];
+      if (!roomType) {
+        roomType = room.RoomTypes[row.RoomType_Type.trim()] = {
+          type: row.RoomType_Type.trim(),
+          name: row.RoomTypeName.trim(),
+          prices: row.RoomTypePrices,
+          BedTypes: {}
+        };
+      }
+
+      if (!services.includes(row.RoomServiceName.trim())) {
+        services.push(row.RoomServiceName.trim())
+        surcharge = surcharge + row.Surcharge
+      }
+      room.Services = [...services];
+      roomType.BedTypes[row.BedType_Type.trim()] = {
+        type: row.BedType_Type.trim(),
+        name: "Giường " + row.BedTypeName.trim(),
+        prices: row.BedTypePrices,
+        surcharge: surcharge,
+        total: row.BedTypePrices + surcharge + row.RoomTypePrices
+      };
+    });
+
+    const array = Object.values(rooms);
+    array.forEach(item => {
+      item.RoomTypes = Object.values(item.RoomTypes)[0]
+      item.RoomTypes.BedTypes = Object.values(item.RoomTypes.BedTypes)
+    })
+    return array
+  } catch (error) {
+    return error.message;
+  }
+}
+
+
+
+
+
+
+
 
 const createRoom = async (room) => {
   try {
@@ -202,6 +280,7 @@ module.exports = {
   getAllRoom,
   getRoomList,
   getRoomById,
+  getRoomByRoomType,
   createRoom,
   updateRoom,
   deleteRoom

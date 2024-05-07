@@ -8,6 +8,7 @@ const {
     getAllRoom,
     getRoomList,
     getRoomById,
+    getRoomByRoomType,
     addRoom,
     updateRoom,
     deleteRoom
@@ -16,6 +17,8 @@ const {
 router.get('/room/get_all', getAllRoom);
 router.get('/rooms', getRoomList)
 router.get('/room', getRoomById)
+router.get('/room', getRoomByRoomType)
+
 router.post('/room', addRoom)
 router.put('/room', updateRoom)
 router.delete('/room', deleteRoom)

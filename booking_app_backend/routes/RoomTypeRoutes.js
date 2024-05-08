@@ -4,8 +4,8 @@ const express = require('express');
 const controller = require('../controllers/RoomTypeController');
 const router = express.Router();
 
-const { 
-  getByPriceRange, 
+const {
+  getByPriceRange,
   getByCapacity,
   getByService,
   getByCapacityAndPriceRange,
@@ -27,5 +27,5 @@ router.put('/roomType', updateRoomType)
 router.delete('/roomType', deleteRoomType)
 
 module.exports = {
-    routes: router
+  routes: router
 }

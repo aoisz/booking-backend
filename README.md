@@ -10,7 +10,10 @@ Họ và tên | Mã số sinh viên
 --- | ---
 Nguyễn Quốc An | 3120410020
 Lưu Trường An | 3120410018
-
+Mai Thanh An | 3120410019
+Phạm Lê Huyền Trang | 3120410012
+Vi Đào Tiến Đạt | 3120410125
+Nguyễn Anh Tuấn | 3120410587
 </br>
 
 **II - How to use?**
@@ -35,11 +38,12 @@ Open new terminal, run: npm start
 
 **III - Have error?**
 </br>
-Try this:
+(👉ﾟヮﾟ)👉 Try this:
 1. Delete node_modules
 2. run: npm i
 3. run: npm start
 
+Or, try install each library
 </br>
 
 **IV - You start code this project?**
@@ -49,4 +53,4 @@ Follow this steps:
 2. Code your things
 3. Commit your code at your branch
 4. You want update to main branch? -> Pull request to main -> Ask someone check and confirm request
-5. You forgot something before coding? -> Fetch orgin at main branch -> Merge main to your branch
+5. You forget something before writing code? -> Fetch orgin at main branch -> Merge main to your branch -> Your code now is newest ♪(^∇^*)

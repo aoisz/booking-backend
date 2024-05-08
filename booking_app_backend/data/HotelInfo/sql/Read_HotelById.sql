@@ -1,0 +1,1 @@
+select * from HotelInfo where ID = @HotelID

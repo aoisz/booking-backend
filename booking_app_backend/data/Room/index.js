@@ -33,8 +33,7 @@ const getAllRoom = async () => {
   }
 }
 
-=======
->>>>>>> parent of aa238b7 (Update)
+
 const getRoomList = async () => {
   try {
     let pool = await sql.connect(config.sql);
@@ -221,15 +220,7 @@ const getRoomByRoomType = async (roomType) => {
 
 const bookingRoom = async (RoomID, room) => {
   try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('Room/sql'); // Folder Name here
-    const execQuery = await pool.request()
-      .input('RoomID', sql.Int, RoomID)
-      .input('RoomType_ID', sql.Int, room.RoomType_ID)
-      .input('Status', sql.NVarChar(100), room.Status)
-      .input('Name', sql.NVarChar(100), room.Name)
-      .input('Note', sql.NVarChar(100), room.Note)
-      .query(sqlQueries.Update_Room);
+
     return execQuery.recordset;
   } catch (error) {
     return error.message;
@@ -284,6 +275,7 @@ const deleteRoom = async (RoomID) => {
 }
 
 module.exports = {
+  getAllRoom,
   getRoomList,
   getRoomById,
   createRoom,

@@ -3,7 +3,6 @@
 const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
-
 const getAllRoom = async () => {
   try {
     let pool = await sql.connect(config.sql);
@@ -13,7 +12,7 @@ const getAllRoom = async () => {
     const roomTypeQueries = await utils.loadSqlQueries('RoomType/sql');
     const list = await pool.request().query(sqlQueries.GetAllRoom);
     var rooms = [];
-    for(let i = 0; i < list.recordset.length; i++) {
+    for (let i = 0; i < list.recordset.length; i++) {
       let surcharge = await pool.request().input("roomId", list.recordset[i]["ID"]).query(serviceQueries.GetTotalSurchargeByRoomId);
       surcharge = surcharge.recordset[0]['price'];
       let servicePrice = await pool.request().input("roomId", list.recordset[i]["ID"]).query(bedTypeQueries.GetTotalPriceByRoomId);
@@ -31,7 +30,6 @@ const getAllRoom = async () => {
     return error.message;
   }
 }
-
 const getRoomList = async () => {
   try {
     let pool = await sql.connect(config.sql);
@@ -224,11 +222,22 @@ const getRoomByRoomType = async (roomType) => {
 }
 
 
-
-
-
-
-
+const bookingRoom = async (RoomID, room) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('Room/sql'); // Folder Name here
+    const execQuery = await pool.request()
+      .input('RoomID', sql.Int, RoomID)
+      .input('RoomType_ID', sql.Int, room.RoomType_ID)
+      .input('Status', sql.NVarChar(100), room.Status)
+      .input('Name', sql.NVarChar(100), room.Name)
+      .input('Note', sql.NVarChar(100), room.Note)
+      .query(sqlQueries.Update_Room);
+    return execQuery.recordset;
+  } catch (error) {
+    return error.message;
+  }
+}
 
 const createRoom = async (room) => {
   try {
@@ -277,7 +286,6 @@ const deleteRoom = async (RoomID) => {
 }
 
 module.exports = {
-  getAllRoom,
   getRoomList,
   getRoomById,
   getRoomByRoomType,

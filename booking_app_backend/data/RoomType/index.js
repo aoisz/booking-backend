@@ -7,7 +7,7 @@ const sql = require('mssql');
 const getByPriceRange = async (minPrice, maxPrice) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('RoomType/sql');
+        const sqlQueries = await utils.loadSqlQueries('RoomType');
         const list = await pool.request()
             .input("minPrice", minPrice)
             .input("maxPrice", maxPrice)
@@ -22,7 +22,7 @@ const getByPriceRange = async (minPrice, maxPrice) => {
 const getByCapacity = async (capacity) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('RoomType/sql'); // Folder Name here
+        const sqlQueries = await utils.loadSqlQueries('RoomType'); // Folder Name here
         const list = await pool.request()
             .input("capacity", capacity)
             .query(sqlQueries.GetByCapacity);
@@ -35,7 +35,7 @@ const getByCapacity = async (capacity) => {
 const getByService = async (service) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('RoomType/sql'); // Folder Name here
+        const sqlQueries = await utils.loadSqlQueries('RoomType'); // Folder Name here
         const list = await pool.request()
             .input("service", service)
             .query(sqlQueries.GetByService);
@@ -48,12 +48,12 @@ const getByService = async (service) => {
 const getByCapacityAndPriceRange = async (capacity, minPrice, maxPrice) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('RoomType/sql');
+        const sqlQueries = await utils.loadSqlQueries('RoomType');
         const list = await pool.request()
-            .input("capacity", capacity) // truyen du lieu vao cau truy van, muon truyen du lieu nao vao cau truy van (file sql) thi m dung ham input nay
-            .input("minPrice", minPrice) // cai ten trong "" phai giong voi trong file sql ten cot 
+            .input("capacity", capacity)
+            .input("minPrice", minPrice)
             .input("maxPrice", maxPrice)
-            .query(sqlQueries.GetByCapacityAndPriceRange); 
+            .query(sqlQueries.GetByCapacityAndPriceRange);
         return list.recordset;
     }
     catch (error) {

@@ -1,1 +1,0 @@
-select RoomType.Prices as 'price' from RoomType where RoomType.ID = @roomTypeId

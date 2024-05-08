@@ -1,1 +1,0 @@
-select * from [User] where [PhoneNumber] = @user_phone

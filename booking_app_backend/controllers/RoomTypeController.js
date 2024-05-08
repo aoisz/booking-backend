@@ -50,7 +50,7 @@ const getRoomTypeList = async (req, res, next) => {
         const roomType_rs = await RoomTypeData.getRoomTypeList();
 
         //
-        // console.log("GET - " + config.url + "/api/roomType")
+        console.log("GET - " + config.url + "/api/roomType")
         res.send(roomType_rs);
     } catch (error) {
         res.status(400).send(error.message)

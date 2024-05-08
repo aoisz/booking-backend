@@ -20,7 +20,7 @@ router.post('/roomtype/getByPriceRange', getByPriceRange);
 router.post('/roomtype/getByCapcity', getByCapacity);
 router.post('/roomtype/getByService', getByService);
 router.post('/roomtype/capacity&pricerange', getByCapacityAndPriceRange)
-router.get('/roomtype/get_all', getRoomTypeList);
+router.get('/roomType', getRoomTypeList)
 router.get('/roomType', getRoomTypeById)
 router.post('/roomType', addRoomType)
 router.put('/roomType', updateRoomType)

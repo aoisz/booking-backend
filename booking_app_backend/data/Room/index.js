@@ -33,6 +33,8 @@ const getAllRoom = async () => {
   }
 }
 
+=======
+>>>>>>> parent of aa238b7 (Update)
 const getRoomList = async () => {
   try {
     let pool = await sql.connect(config.sql);
@@ -282,7 +284,6 @@ const deleteRoom = async (RoomID) => {
 }
 
 module.exports = {
-  getAllRoom,
   getRoomList,
   getRoomById,
   createRoom,

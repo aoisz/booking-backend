@@ -1,0 +1,1 @@
+select sum(BedType.Prices) as 'price' from BedType where BedType.Room_ID = @roomId

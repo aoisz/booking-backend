@@ -33,3 +33,6 @@ app.use('/api', userRoutes.routes)
 app.listen(config.port, () => {
   console.log('Server is listening on ' + config.url)
 })
+app.listen(config.port, "0.0.0.0", () => {
+  console.log('Server is listening on http://localhost:' + config.port)
+})

@@ -228,8 +228,6 @@ const getRoomByRoomType = async (roomType) => {
 
 
 
-
-
 const createRoom = async (room) => {
   try {
     let pool = await sql.connect(config.sql);

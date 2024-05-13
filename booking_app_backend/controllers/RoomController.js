@@ -3,7 +3,7 @@
 const RoomData = require('../data/Room');
 const config = require('../config');
 
-const getAllRoom = async(req, res, next) => {
+const getAllRoom = async (req, res, next) => {
     try {
         const rooms = await RoomData.getAllRoom();
         res.send(rooms);
@@ -54,6 +54,19 @@ const getRoomByRoomType = async (req, res, next) => {
 }
 
 
+const bookingRoom = async (req, res, next) => {
+    try {
+        const data = req.body;
+        console.log(data);
+        res.status(200).send("Post thành công");
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
+
+
+
 
 const addRoom = async (req, res, next) => {
     try {
@@ -100,6 +113,7 @@ module.exports = {
     getRoomList,
     getRoomById,
     getRoomByRoomType,
+    bookingRoom,
     addRoom,
     updateRoom,
     deleteRoom

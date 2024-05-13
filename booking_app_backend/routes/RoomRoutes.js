@@ -9,6 +9,7 @@ const {
     getRoomList,
     getRoomById,
     getRoomByRoomType,
+    bookingRoom,
     addRoom,
     updateRoom,
     deleteRoom
@@ -19,7 +20,7 @@ router.get('/rooms', getRoomList)
 router.get('/room', getRoomById)
 router.get('/room', getRoomByRoomType)
 
-router.post('/room', addRoom)
+router.post('/room', bookingRoom)
 router.put('/room', updateRoom)
 router.delete('/room', deleteRoom)
 

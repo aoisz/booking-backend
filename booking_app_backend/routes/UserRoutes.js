@@ -10,13 +10,17 @@ const {
   getUserByPhone,
   addUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  updateUserPoint,
+  updateUserRollUp
 } = controller
 
-router.get('/User', getUserList)
+router.get('/Users', getUserList)
 router.get('/User', getUserByPhone)
 router.post('/User', addUser)
 router.put('/User', updateUser)
+router.put('/User/updateUserPoint', updateUserPoint)
+router.put('/User/updateUserRollUp', updateUserRollUp)
 // router.delete('/User', deleteCoupon)
 
 module.exports = {

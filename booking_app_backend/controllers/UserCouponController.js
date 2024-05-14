@@ -31,9 +31,9 @@ const getUserCouponListByID = async (req, res, next) => {
 const addUserCoupon = async (req, res, next) => {
   try {
     const body = req.body;
-    const rs = await data.addUserCoupon(body.CouponID, body.UserID, body.IsUsed, body.NumberOfUses);
+    const rs = await data.addUserCoupon(body.CouponID, body.UserID, body.IsUsed, body.NumberOfUses, body.DateScan);
     //
-    console.log("POST - " + config.url + "/api/"+_+"/Add")
+    console.log("POST - " + config.url + "/api/"+_+"/Add - " + body.CouponID, body.UserID, body.IsUsed, body.NumberOfUses, body.DateScan)
     //
     res.send(rs);
   } catch (error) {

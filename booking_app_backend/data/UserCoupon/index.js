@@ -28,7 +28,7 @@ const getUserCouponListByID = async (user_id) => {
   }
 }
 
-const addUserCoupon = async (CouponID, UserID, IsUsed, NumberOfUses) => {
+const addUserCoupon = async (CouponID, UserID, IsUsed, NumberOfUses, DateScan) => {
   try {
     let pool = await sql.connect(config.sql);
     const sqlQueries = await utils.loadSqlQueries('UserCoupon'); // Folder Name here
@@ -37,6 +37,7 @@ const addUserCoupon = async (CouponID, UserID, IsUsed, NumberOfUses) => {
       .input('UserID', sql.Int, UserID)
       .input('IsUsed', sql.Int, IsUsed)
       .input('NumberOfUses', sql.Int, NumberOfUses)
+      .input('DateScan', sql.Date, DateScan)
       .query(sqlQueries.Create_UserCoupon); // File SQL Query here
     return execQuery.recordset;
   } catch (error) {

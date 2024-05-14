@@ -83,11 +83,77 @@ const updateUser = async (user_id, user) => {
     return error.message;
   }
 }
+
+const updateUserPoint = async (userId, point) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('User'); // Folder Name here
+    const execQuery = await pool.request()
+      .input('UserID', sql.Int, userId)
+      .input('Point', sql.Int, point)
+      .query(sqlQueries.UpdatePoint);
+    return execQuery.recordset;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+function getDayNow() {
+  // Create a new Date object for the current date and time
+  const now = new Date();
+
+  // Get the current year, month, and day from the Date object
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+  const currentDay = now.getDate();
+
+  const formattedDate = `${currentYear}-${formatDateComponent(currentMonth)}-${formatDateComponent(currentDay)}`;
+
+  return formattedDate;
+}
+
+function formatDateComponent(dateComponent) {
+  return dateComponent < 10 ? `0${dateComponent}` : dateComponent;
+}
+
+function getIndexDayNow() {
+  const now = new Date();
+  const dayOfWeekIndex = now.getDay();
+
+  return dayOfWeekIndex;
+}
+
+const updateUserRollUp = async (userId) => {
+  try {
+      let pool = await sql.connect(config.sql);
+      const sqlQueries = await utils.loadSqlQueries('User'); // Folder Name here
+
+      // Execute the stored procedure UpdateWeekRollUp
+      await pool.request()
+          .input('UserID', sql.Int, userId)
+          .input('DayOfWeek', sql.Int, getIndexDayNow())
+          .execute('UpdateWeekRollUp');
+
+      const execQuery = await pool.request()
+          .input('UserID', sql.Int, userId)
+          .input('LastDayRollUp', sql.Date, getDayNow())
+          .query(sqlQueries.Update_UserRollUp);
+
+      return execQuery.recordset;
+  } catch (error) {
+      return error.message;
+  }
+}
+
+
+
 module.exports = {
   getUserList,
   getUserById,
   getUserByPhone,
   getEvents,
   createUser,
-  updateUser
+  updateUser,
+  updateUserPoint,
+  updateUserRollUp
 }

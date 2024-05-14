@@ -226,6 +226,22 @@ const getRoomByRoomType = async (roomType) => {
 
 
 
+const createRoom = async (room) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('Room/sql'); // Folder Name here
+    const execQuery = await pool.request()
+      .input('RoomType_ID', sql.Int, room.RoomType_ID)
+      .input('Status', sql.NVarChar(100), room.Status)
+      .input('Name', sql.NVarChar(100), room.Name)
+      .input('Note', sql.NVarChar(100), room.Note)
+      .query(sqlQueries.Create_Room);
+    return execQuery.recordset;
+  } catch (error) {
+    return error.message;
+  }
+}
+
 const updateRoom = async (RoomID, room) => {
   try {
     let pool = await sql.connect(config.sql);

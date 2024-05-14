@@ -7,7 +7,7 @@ const getUserList = async (req, res, next) => {
   try { 
     const user_rs = await UserData.getUserList(); 
 
-    console.log("GET - http://localhost:" + config.port+"/api/user") // Chú ý thay đổi endpoint
+    console.log("GET - http://localhost:" + config.port+"/api/users") // Chú ý thay đổi endpoint
     res.send(user_rs); 
   } catch (error) { 
     res.status(400).send(error.message) 
@@ -72,6 +72,31 @@ const deleteUser = async (req, res, next) => {
   } catch (error) { 
     res.status(400).send(error.message) 
   } 
+}
+
+const updateUserPoint = async (req, res, next) => { 
+  try { 
+    const userId = req.query.id;
+    const point = req.query.point;
+    const user_rs = await UserData.updateUserPoint(userId, point) 
+
+    console.log("PUT - http://localhost:" + config.port + "/api/user/updateUserPoint?id=" + userId) // Chú ý thay đổi endpoint
+    res.send(user_rs); 
+  } catch (error) { 
+    res.status(400).send(error.message) 
+  } 
+} 
+
+const updateUserRollUp = async (req, res, next) => { 
+  try { 
+    const userId = req.query.id;
+    const user_rs = await UserData.updateUserRollUp(userId) 
+
+    console.log("PUT - http://localhost:" + config.port + "/api/user/updateUserRollUp?id=" + userId) // Chú ý thay đổi endpoint
+    res.send(user_rs); 
+  } catch (error) { 
+    res.status(400).send(error.message) 
+  } 
 } 
 
 module.exports = { 
@@ -80,5 +105,7 @@ module.exports = {
   getUserByPhone, 
   addUser, 
   updateUser, 
-  deleteUser 
+  deleteUser,
+  updateUserPoint,
+  updateUserRollUp
 }

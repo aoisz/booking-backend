@@ -11,6 +11,7 @@ const {
     getRoomByRoomType,
     getAllMyBooking,
     bookingRoom,
+    addRoom,
     updateRoom,
 } = controller
 

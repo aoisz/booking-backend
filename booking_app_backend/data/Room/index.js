@@ -13,7 +13,7 @@ const getAllRoom = async () => {
     const roomTypeQueries = await utils.loadSqlQueries('RoomType/sql');
     const list = await pool.request().query(sqlQueries.GetAllRoom);
     var rooms = [];
-    for(let i = 0; i < list.recordset.length; i++) {
+    for (let i = 0; i < list.recordset.length; i++) {
       let surcharge = await pool.request().input("roomId", list.recordset[i]["ID"]).query(serviceQueries.GetTotalSurchargeByRoomId);
       surcharge = surcharge.recordset[0]['price'];
       let servicePrice = await pool.request().input("roomId", list.recordset[i]["ID"]).query(bedTypeQueries.GetTotalPriceByRoomId);
@@ -50,8 +50,6 @@ const getRoomList = async () => {
         room = rooms[row.ID] = {
           ID: row.ID,
           Name: row.Name.trim(),
-          Status: row.Status,
-          Availability: row.Availability,
           Rating: row.Rating,
           Description: row.Description.trim(),
           RoomTypes: {},
@@ -80,7 +78,8 @@ const getRoomList = async () => {
         name: "Giường " + row.BedTypeName.trim(),
         prices: row.BedTypePrices,
         surcharge: surcharge,
-        total: row.BedTypePrices + surcharge + row.RoomTypePrices
+        total: row.BedTypePrices + surcharge + row.RoomTypePrices,
+        status: row.StatusBedType
       };
     });
     const array = Object.values(rooms);
@@ -113,8 +112,6 @@ const getRoomById = async (id) => {
         room = rooms[row.ID] = {
           ID: row.ID,
           Name: row.Name.trim(),
-          Status: row.Status,
-          Availability: row.Availability,
           Rating: row.Rating,
           Description: row.Description.trim(),
           RoomTypes: {},
@@ -143,7 +140,9 @@ const getRoomById = async (id) => {
         name: "Giường " + row.BedTypeName.trim(),
         prices: row.BedTypePrices,
         surcharge: surcharge,
-        total: row.BedTypePrices + surcharge + row.RoomTypePrices
+        total: row.BedTypePrices + surcharge + row.RoomTypePrices,
+        status: row.StatusBedType
+
       };
     });
 
@@ -227,25 +226,6 @@ const getRoomByRoomType = async (roomType) => {
 
 
 
-
-
-
-const createRoom = async (room) => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('Room/sql'); // Folder Name here
-    const execQuery = await pool.request()
-      .input('RoomType_ID', sql.Int, room.RoomType_ID)
-      .input('Status', sql.NVarChar(100), room.Status)
-      .input('Name', sql.NVarChar(100), room.Name)
-      .input('Note', sql.NVarChar(100), room.Note)
-      .query(sqlQueries.Create_Room);
-    return execQuery.recordset;
-  } catch (error) {
-    return error.message;
-  }
-}
-
 const updateRoom = async (RoomID, room) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -263,25 +243,10 @@ const updateRoom = async (RoomID, room) => {
   }
 }
 
-const deleteRoom = async (RoomID) => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('Room/sql'); // Folder Name here
-    const execQuery = await pool.request()
-      .input('RoomID', sql.Int, RoomID)
-      .query(sqlQueries.Delete_Room);
-    return execQuery.recordset;
-  } catch (error) {
-    return error.message;
-  }
-}
-
 module.exports = {
   getAllRoom,
   getRoomList,
   getRoomById,
   getRoomByRoomType,
-  createRoom,
   updateRoom,
-  deleteRoom
 }

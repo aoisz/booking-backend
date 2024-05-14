@@ -2,15 +2,17 @@
 
 const BillData = require('../data/Bill');
 
-const getBillList = async (req, res, next) => {
+const getBillByRoom_ID = async (req, res, next) => {
   try {
-    const list = await BillData.getBillList();
-    res.send(list);
+    const room_id = req.query.id;
+    const bill_rs = await BillData.getBillByRoom_ID(room_id);
+    res.send(bill_rs);
   } catch (error) {
     res.status(400).send(error.message)
   }
 }
 
+
 module.exports = {
-  getBillList
+  getBillByRoom_ID
 }

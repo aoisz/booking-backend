@@ -15,7 +15,8 @@ select
     bt.Room_ID as BedTypeRoom_ID,
     bt.Type as BedType_Type,
     bt.Name as BedTypeName,
-    bt.Prices as BedTypePrices
+    bt.Prices as BedTypePrices,
+    bt.Status as StatusBedType
  from Room as r
 left join RoomType as rt on rt.ID = r.RoomType_ID
 right join RoomServices as rsv on rsv.Room_ID = r.ID

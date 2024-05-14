@@ -1,0 +1,1 @@
+select * from UserBookingInfo where Bill_ID = @Bill_ID

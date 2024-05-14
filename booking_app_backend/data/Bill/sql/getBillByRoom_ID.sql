@@ -1,0 +1,1 @@
+select * from Bill where Room_ID = @Room_ID

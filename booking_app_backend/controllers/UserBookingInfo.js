@@ -1,19 +1,16 @@
-const UserData = require('../data/User');
+const UserBookingInfoData = require('../data/UserBookingInfo');
 const config = require('../config');
 
-const addUser = async (req, res, next) => {
+const getUserBookingInfoByBill_ID = async (req, res, next) => {
     try {
-        const data = req.body;
-        const user_rs = await UserData.createUser(data)
-
-        //
-        console.log("POST - " + config.url + "/api/user")
-        res.send(user_rs);
+        const bill_id = req.query.id;
+        const userbki_rs = await UserBookingInfoData.getUserBookingInfoByBill_ID(bill_id);
+        res.send(userbki_rs);
     } catch (error) {
         res.status(400).send(error.message)
     }
 }
 
 module.exports = {
-    addUser
+    getUserBookingInfoByBill_ID
 }

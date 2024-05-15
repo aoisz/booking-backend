@@ -47,8 +47,38 @@ const createUserBookingInfo = async (userBookingInfo) => {
   }
 }
 
+
+const deleteUserBookingInfoByID = async (id) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('UserBookingInfo/sql'); // Folder Name here
+    const execQuery = await pool.request()
+      .input('ID', sql.Int, id)
+      .query(sqlQueries.DeleteByID);
+    return execQuery.recordset;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+const updateUserBookingInfoByID = async (id, status) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('UserBookingInfo/sql'); // Folder Name here
+    const execQuery = await pool.request()
+      .input('ID', sql.Int, id)
+      .input('Status', sql.Int, status)
+      .query(sqlQueries.updateStatus);
+    return execQuery.recordset;
+  } catch (error) {
+    return error.message;
+  }
+}
+
 module.exports = {
   getUserBookingInfoByBill_ID,
   getUserBookingInfoByUser_ID,
-  createUserBookingInfo
+  createUserBookingInfo,
+  deleteUserBookingInfoByID,
+  updateUserBookingInfoByID
 }

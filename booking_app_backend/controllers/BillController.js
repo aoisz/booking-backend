@@ -12,7 +12,6 @@ const getBillByRoom_ID = async (req, res, next) => {
   }
 }
 
-
 module.exports = {
   getBillByRoom_ID
 }

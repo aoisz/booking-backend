@@ -4,7 +4,6 @@ const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
 
-
 const getBillByRoom_ID = async (id) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -48,11 +47,25 @@ const createBill = async (bill) => {
 }
 
 
+const deleteBillByID = async (id) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('Bill/sql'); // Folder Name here
+    const execQuery = await pool.request()
+      .input('ID', sql.Int, id)
+      .query(sqlQueries.DeleteByID);
+    return execQuery.recordset;
+  } catch (error) {
+    return error.message;
+  }
+}
+
 
 
 
 module.exports = {
   getBillByRoom_ID,
   getBillByID,
-  createBill
+  createBill,
+  deleteBillByID
 }

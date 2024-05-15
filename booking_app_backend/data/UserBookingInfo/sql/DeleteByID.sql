@@ -1,0 +1,1 @@
+delete [UserBookingInfo] where [ID] = @ID

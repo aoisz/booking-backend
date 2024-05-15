@@ -11,6 +11,19 @@ const getUserBookingInfoByBill_ID = async (req, res, next) => {
     }
 }
 
+const updateUserBookingInfoByID = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        const status = req.query.status;
+        const rs = await CouponData.updateUserBookingInfoByID(id, status)
+
+        res.send(rs);
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
 module.exports = {
-    getUserBookingInfoByBill_ID
+    getUserBookingInfoByBill_ID,
+    updateUserBookingInfoByID
 }

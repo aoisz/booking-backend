@@ -74,6 +74,7 @@ const getRoomList = async () => {
       }
       room.Services = [...services];
       roomType.BedTypes[row.BedType_Type.trim()] = {
+        id: row.BedTypeID,
         type: row.BedType_Type.trim(),
         name: "Giường " + row.BedTypeName.trim(),
         prices: row.BedTypePrices,
@@ -136,13 +137,13 @@ const getRoomById = async (id) => {
       }
       room.Services = [...services];
       roomType.BedTypes[row.BedType_Type.trim()] = {
+        id: row.BedTypeID,
         type: row.BedType_Type.trim(),
         name: "Giường " + row.BedTypeName.trim(),
         prices: row.BedTypePrices,
         surcharge: surcharge,
         total: row.BedTypePrices + surcharge + row.RoomTypePrices,
         status: row.StatusBedType
-
       };
     });
 
@@ -222,47 +223,9 @@ const getRoomByRoomType = async (roomType) => {
   }
 }
 
-
-
-
-
-const createRoom = async (room) => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('Room/sql'); // Folder Name here
-    const execQuery = await pool.request()
-      .input('RoomType_ID', sql.Int, room.RoomType_ID)
-      .input('Status', sql.NVarChar(100), room.Status)
-      .input('Name', sql.NVarChar(100), room.Name)
-      .input('Note', sql.NVarChar(100), room.Note)
-      .query(sqlQueries.Create_Room);
-    return execQuery.recordset;
-  } catch (error) {
-    return error.message;
-  }
-}
-
-const updateRoom = async (RoomID, room) => {
-  try {
-    let pool = await sql.connect(config.sql);
-    const sqlQueries = await utils.loadSqlQueries('Room/sql'); // Folder Name here
-    const execQuery = await pool.request()
-      .input('RoomID', sql.Int, RoomID)
-      .input('RoomType_ID', sql.Int, room.RoomType_ID)
-      .input('Status', sql.NVarChar(100), room.Status)
-      .input('Name', sql.NVarChar(100), room.Name)
-      .input('Note', sql.NVarChar(100), room.Note)
-      .query(sqlQueries.Update_Room);
-    return execQuery.recordset;
-  } catch (error) {
-    return error.message;
-  }
-}
-
 module.exports = {
   getAllRoom,
   getRoomList,
   getRoomById,
   getRoomByRoomType,
-  updateRoom,
 }

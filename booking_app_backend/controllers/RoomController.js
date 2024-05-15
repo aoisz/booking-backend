@@ -61,6 +61,7 @@ const getRoomByRoomType = async (req, res, next) => {
 const bookingRoom = async (req, res, next) => {
     try {
         const data = req.body;
+        console.log(data);
         let user = data?.user;
         let bedType = data?.bill?.bedType
         let room = data?.bill?.infoRoom
@@ -73,7 +74,6 @@ const bookingRoom = async (req, res, next) => {
             bedType: bedType?.type,
             finalCharge: data?.bill?.finalCharge,
         }
-
         let exist_bill = await BillData.getBillByRoom_ID(room?.ID);
         if (exist_bill?.length >= 1) {
             let isConflict = false;
@@ -81,10 +81,10 @@ const bookingRoom = async (req, res, next) => {
                 console.log(item);
                 console.log(data?.bill?.checkInDate, item?.CheckOutDay, item?.Duration, data?.bill?.typeBooking);
                 console.log(checkAllowBooking(data?.bill?.checkInDate, item?.CheckOutDay, item?.Duration, data?.bill?.typeBooking));
-                console.log(item?.BedType?.trim(), bedType?.name?.trim());
+                console.log(item?.BedType?.trim(), bedType?.type?.trim());
                 console.log(data.bill.typeBooking);
                 if (
-                    item?.BedType?.trim() == bedType?.name?.trim()
+                    item?.BedType?.trim() == bedType?.type?.trim()
 
                 ) {
                     if (!checkAllowBooking(data?.bill?.checkInDate, item?.CheckOutDay, item?.Duration, data?.bill?.typeBooking)) {
@@ -112,8 +112,8 @@ const bookingRoom = async (req, res, next) => {
                 };
                 console.log(userBookingInfo);
                 const room_rs = await UserBookingInfoData.createUserBookingInfo(userBookingInfo);
-                console.log(room_rs);
-                let isUpdateStatus = await BedTypeData.updateBedType(bedType.id, room.id, 1); // Use await if updateBedType is async
+                console.log(bedType.id, room.ID, bedType.status);
+                let isUpdateStatus = await BedTypeData.updateBedType(bedType.id, room.ID, bedType.status); // Use await if updateBedType is async
                 console.log(isUpdateStatus);
             }
         } else {
@@ -131,7 +131,7 @@ const bookingRoom = async (req, res, next) => {
             console.log(userBookingInfo);
             const room_rs = await UserBookingInfoData.createUserBookingInfo(userBookingInfo);
             console.log(room_rs);
-            let isUpdateStatus = await BedTypeData.updateBedType(bedType.id, room.id, 1); // Use await if updateBedType is async
+            let isUpdateStatus = await BedTypeData.updateBedType(bedType.id, room.ID, bedType.status); // Use await if updateBedType is async
             console.log(isUpdateStatus);
         }
         res.status(200).send("Thanh coong");
@@ -201,9 +201,6 @@ function checkAllowBooking(newCheckin, oldCheckout, duration, type) {
     }
 }
 
-
-
-
 const getAllMyBooking = async (req, res, next) => {
     try {
         const u_id = req.query.uid
@@ -247,34 +244,26 @@ const getAllMyBooking = async (req, res, next) => {
     }
 }
 
-
-
-const updateRoom = async (req, res, next) => {
+const deleteMyBooking = async (req, res, next) => {
     try {
-        const room_id = req.query.id;
-        const data = req.body;
-        const room_rs = await RoomData.updateRoom(room_id, data)
+        const userbkID = req.query.bkid;
+        const billID = req.query.billid;
+        const userbk_rs = await UserBookingInfoData.deleteUserBookingInfoByID(userbkID)
+        const bill_rs = await BillData.deleteBillByID(billID)
 
+        console.log(userbkID, billID);
         //
-        console.log("PUT - " + config.url + "/api/room?id=" + room_id)
-        res.send(room_rs);
+        console.log("DELETE - " + config.url + "/api/mybooking?userbookinginfoID=" + userbkID + "&billID" + billID)
+        res.send("success");
     } catch (error) {
         res.status(400).send(error.message)
     }
 }
 
-const deleteRoom = async (req, res, next) => {
-    try {
-        const room_id = req.query.id;
-        const room_rs = await RoomData.deleteRoom(room_id)
 
-        //
-        console.log("DELETE - " + config.url + "/api/room?id=" + room_id)
-        res.send(room_rs);
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-}
+
+
+
 
 module.exports = {
     getAllRoom,
@@ -283,5 +272,5 @@ module.exports = {
     getRoomByRoomType,
     getAllMyBooking,
     bookingRoom,
-    updateRoom,
+    deleteMyBooking
 }

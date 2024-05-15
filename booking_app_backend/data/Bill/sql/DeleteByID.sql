@@ -1,0 +1,1 @@
+delete [Bill] where [ID] = @ID

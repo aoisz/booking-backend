@@ -254,9 +254,9 @@ const deleteMyBooking = async (req, res, next) => {
         console.log(userbkID, billID);
         //
         console.log("DELETE - " + config.url + "/api/mybooking?userbookinginfoID=" + userbkID + "&billID" + billID)
-        res.send("success");
+        res.json({ "status": 1, "message": "Successfully!" })
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).json({ "status": 0, "message": "Error!" })
     }
 }
 

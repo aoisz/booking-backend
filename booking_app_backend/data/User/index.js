@@ -40,7 +40,7 @@ const getUserByPhone = async (phone) => {
   try {
     let pool = await sql.connect(config.sql);
     const sqlQueries = await utils.loadSqlQueries('User'); // Folder Name here
-    const user = await pool.request().input('user_phone', sql.Char, phone).query(sqlQueries.Read_UserByPhone);
+    const user = await pool.request().input('user_phone', sql.NChar(10), phone).query(sqlQueries.Read_UserByPhone);
     return user.recordset;
   } catch (error) {
     return error.message;
@@ -125,23 +125,23 @@ function getIndexDayNow() {
 
 const updateUserRollUp = async (userId) => {
   try {
-      let pool = await sql.connect(config.sql);
-      const sqlQueries = await utils.loadSqlQueries('User'); // Folder Name here
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('User'); // Folder Name here
 
-      // Execute the stored procedure UpdateWeekRollUp
-      await pool.request()
-          .input('UserID', sql.Int, userId)
-          .input('DayOfWeek', sql.Int, getIndexDayNow())
-          .execute('UpdateWeekRollUp');
+    // Execute the stored procedure UpdateWeekRollUp
+    await pool.request()
+      .input('UserID', sql.Int, userId)
+      .input('DayOfWeek', sql.Int, getIndexDayNow())
+      .execute('UpdateWeekRollUp');
 
-      const execQuery = await pool.request()
-          .input('UserID', sql.Int, userId)
-          .input('LastDayRollUp', sql.Date, getDayNow())
-          .query(sqlQueries.Update_UserRollUp);
+    const execQuery = await pool.request()
+      .input('UserID', sql.Int, userId)
+      .input('LastDayRollUp', sql.Date, getDayNow())
+      .query(sqlQueries.Update_UserRollUp);
 
-      return execQuery.recordset;
+    return execQuery.recordset;
   } catch (error) {
-      return error.message;
+    return error.message;
   }
 }
 

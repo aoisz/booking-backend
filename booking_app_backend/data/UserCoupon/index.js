@@ -28,6 +28,21 @@ const getUserCouponListByID = async (user_id) => {
   }
 }
 
+
+const getUserCouponByID = async (apply_discount_id) => {
+  try {
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries('UserCoupon'); // Folder Name here
+    const execQuery = await pool.request()
+      .input('apply_discount_id', sql.Int, apply_discount_id)
+      .query(sqlQueries.Read_UserCouponByID); // File SQL Query here
+    return execQuery.recordset;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+
 const addUserCoupon = async (CouponID, UserID, IsUsed, NumberOfUses, DateScan) => {
   try {
     let pool = await sql.connect(config.sql);
@@ -66,5 +81,6 @@ module.exports = {
   getUserCouponList,
   getUserCouponListByID,
   addUserCoupon,
+  getUserCouponByID,
   updateUserUseCoupon
 }

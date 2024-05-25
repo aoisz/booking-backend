@@ -6,7 +6,8 @@ insert into Bill
   [CheckOutDay],
   [Duration],
   [BedType],
-  [FinalCharge]
+  [FinalCharge],
+  [BedType_ID]
 )
 Values
 (
@@ -16,7 +17,8 @@ Values
   @CheckOutDay,
   @Duration,
   @BedType,
-  @FinalCharge
+  @FinalCharge,
+  @BedType_ID
 )
 
 SELECT SCOPE_IDENTITY() AS ID;

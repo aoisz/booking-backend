@@ -4,6 +4,7 @@ const RoomData = require('../data/Room');
 const BillData = require('../data/Bill');
 const UserBookingInfoData = require('../data/UserBookingInfo');
 const BedTypeData = require('../data/BedType');
+const UserCouponData = require('../data/UserCoupon');
 
 const config = require('../config');
 
@@ -73,16 +74,12 @@ const bookingRoom = async (req, res, next) => {
             duration: data?.bill?.duration,
             bedType: bedType?.type,
             finalCharge: data?.bill?.finalCharge,
+            bedTypeId: bedType?.id
         }
         let exist_bill = await BillData.getBillByRoom_ID(room?.ID);
         if (exist_bill?.length >= 1) {
             let isConflict = false;
             for (const item of exist_bill) {
-                console.log(item);
-                console.log(data?.bill?.checkInDate, item?.CheckOutDay, item?.Duration, data?.bill?.typeBooking);
-                console.log(checkAllowBooking(data?.bill?.checkInDate, item?.CheckOutDay, item?.Duration, data?.bill?.typeBooking));
-                console.log(item?.BedType?.trim(), bedType?.type?.trim());
-                console.log(data.bill.typeBooking);
                 if (
                     item?.BedType?.trim() == bedType?.type?.trim()
 
@@ -103,7 +100,7 @@ const bookingRoom = async (req, res, next) => {
                 let bill_id = await BillData.createBill(bill);
                 let userBookingInfo = {
                     user_id: user.ID,
-                    apply_discount_id: data?.bill?.discount?.id ?? null, // Fix here
+                    apply_discount_id: data?.bill?.discount?.ID, // Fix here
                     bill_id: bill_id,
                     timeBooking: data?.timeBooking,
                     typePayment: data.bill.typePayment,
@@ -121,7 +118,7 @@ const bookingRoom = async (req, res, next) => {
             let bill_id = await BillData.createBill(bill);
             let userBookingInfo = {
                 user_id: user.ID,
-                apply_discount_id: data?.bill?.discount?.id ?? null, // Fix here
+                apply_discount_id: data?.bill?.discount?.ID ?? null, // Fix here
                 bill_id: bill_id,
                 timeBooking: data?.timeBooking,
                 typePayment: data.bill.typePayment,
@@ -206,7 +203,8 @@ const getAllMyBooking = async (req, res, next) => {
         const u_id = req.query.uid
         let bill_rs = [];
         let room_rs = [];
-        let results = []
+        let results = [];
+        let coupon_rs = [];
         const userbki_rs = await UserBookingInfoData.getUserBookingInfoByUser_ID(u_id);
 
 
@@ -217,10 +215,17 @@ const getAllMyBooking = async (req, res, next) => {
 
             bill_rs = await Promise.all(billPromises);
 
+            console.log(bill_rs);
+
             const roomPromises = bill_rs.flat().map(item => {
                 return RoomData.getRoomById(item.Room_ID);
             });
             room_rs = await Promise.all(roomPromises);
+
+            const couponPromises = userbki_rs.flat().map(item => {
+                return UserCouponData.getUserCouponByID(item.ApplyDiscount_ID)
+            });
+            coupon_rs = await Promise.all(couponPromises);
 
         }
 
@@ -233,7 +238,8 @@ const getAllMyBooking = async (req, res, next) => {
             let result = {
                 booking: booking,
                 bill: bill,
-                room: room[0]
+                room: room[0],
+                discount: coupon_rs[0][0]
             }
             results.push(result)
         })
@@ -261,6 +267,31 @@ const deleteMyBooking = async (req, res, next) => {
 }
 
 
+const updateUserBookingInfoByID = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        const status = req.query.status;
+        const rs = await UserBookingInfoData.updateUserBookingInfoByID(id, status)
+        console.log("Update status payment")
+        res.send(rs);
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
+const updateStatusBedType = async (req, res, next) => {
+    try {
+        const bedtypeId = req.query.bedtypeId;
+        const status = req.query.status;
+        const roomId = req.query.roomId;
+        const rs = await BedTypeData.updateBedType(bedtypeId, roomId, status);
+        res.json({ "status": 1, "message": "Successfully!" })
+    } catch (error) {
+        res.status(400).json({ "status": 0, "message": "Error!" })
+    }
+}
+
+
 
 
 
@@ -272,5 +303,7 @@ module.exports = {
     getRoomByRoomType,
     getAllMyBooking,
     bookingRoom,
-    deleteMyBooking
+    deleteMyBooking,
+    updateUserBookingInfoByID,
+    updateStatusBedType
 }

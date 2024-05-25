@@ -12,6 +12,7 @@ const userRoutes = require('./routes/UserRoutes');
 const roomTypeRoutes = require('./routes/RoomTypeRoutes');
 const roomRoutes = require('./routes/RoomRoutes')
 const hotelRoutes = require('./routes/HotelInfoRoutes')
+const userBookingInfo = require('./routes/UserBookingInfoRoutes')
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.use('/api', roomRoutes.routes)
 app.use('/api', roomTypeRoutes.routes)
 app.use('/api', hotelRoutes.routes)
 app.use('/api', userRoutes.routes)
-
+app.use("/api", userBookingInfo.routes)
 
 
 

@@ -11,7 +11,9 @@ const {
     getRoomByRoomType,
     getAllMyBooking,
     bookingRoom,
-    deleteMyBooking
+    deleteMyBooking,
+    updateUserBookingInfoByID,
+    updateStatusBedType
 } = controller
 
 router.get('/room/get_all', getAllRoom);
@@ -22,6 +24,12 @@ router.get('/mybooking', getAllMyBooking)
 
 router.post('/room', bookingRoom)
 router.delete('/mybooking', deleteMyBooking)
+router.put('/mybooking', updateUserBookingInfoByID)
+
+
+///bedtype
+
+router.put('/bedtype', updateStatusBedType)
 
 module.exports = {
     routes: router

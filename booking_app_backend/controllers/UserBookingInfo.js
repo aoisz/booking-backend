@@ -15,11 +15,11 @@ const updateUserBookingInfoByID = async (req, res, next) => {
     try {
         const id = req.query.id;
         const status = req.query.status;
-        const rs = await CouponData.updateUserBookingInfoByID(id, status)
-
-        res.send(rs);
+        const rs = await UserBookingInfoData.updateUserBookingInfoByID(id, status)
+        console.log("updateaaaasdfasfasfa");
+        res.json({ "status": 1, "message": "Successfully!" })
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).json({ "status": 0, "message": "Error!" })
     }
 }
 

@@ -39,6 +39,7 @@ const createBill = async (bill) => {
       .input('Duration', sql.Int, bill.duration)
       .input('BedType', sql.NChar(10), bill.bedType)
       .input('FinalCharge', sql.Float, bill.finalCharge)
+      .input('BedType_ID', sql.Int, bill.bedTypeId)
       .query(sqlQueries.Create_Bill);
     return execQuery.recordset[0]["ID"];
   } catch (error) {
